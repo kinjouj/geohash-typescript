@@ -3,7 +3,6 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import stylistic from "@stylistic/eslint-plugin";
 import globals from "globals";
-import jest from "eslint-plugin-jest";
 import importPlugin from "eslint-plugin-import";
 
 export default defineConfig(
@@ -18,6 +17,9 @@ export default defineConfig(
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
       globals: {
         ...globals.browser,
@@ -25,13 +27,11 @@ export default defineConfig(
     },
     plugins: {
       "@stylistic": stylistic,
-      "jest": jest,
       "import": importPlugin,
     },
     rules: {
-      ...jest.configs["recommended"].rules,
-      ...jest.configs["style"].rules,
       "curly": ["error", "all"],
+      "eqeqeq": ["error", "always", { "null": "always" }],
       "no-empty": ["error", { allowEmptyCatch: false }],
       "no-constant-condition": "error",
       "no-restricted-imports": ["error", { "paths": ["./"] }],
@@ -47,6 +47,8 @@ export default defineConfig(
           "functions": "ignore",
         },
       ],
+      "@stylistic/jsx-one-expression-per-line": "off",
+      "@stylistic/jsx-quotes": ["error", "prefer-double"],
       "@stylistic/max-statements-per-line": ["error", { max: 2 }],
       "@stylistic/no-multi-spaces": [
         "error",
@@ -84,6 +86,7 @@ export default defineConfig(
           destructuredArrayIgnorePattern: "^_",
         },
       ],
+      "@typescript-eslint/strict-boolean-expressions": "error",
       "import/order": [
         "error",
         {
@@ -99,6 +102,11 @@ export default defineConfig(
           "newlines-between": "never",
         },
       ],
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
   },
 );

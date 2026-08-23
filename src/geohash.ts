@@ -127,7 +127,7 @@ export default class GeoHash {
     }
 
     private static adjacent(geohash: string, direction: Direction): string {
-      const type: Parity = geohash.length % 2 == 0 ? 'even' : 'odd';
+      const type: Parity = geohash.length % 2 === 0 ? 'even' : 'odd';
       const border = new Set(BORDER[direction][type]);
       const last = geohash.substring(geohash.length - 1);
       let base = geohash.substring(0, geohash.length - 1);
